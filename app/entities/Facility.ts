@@ -23,6 +23,8 @@ export class Facility {
   @ManyToMany(() => User, (user) => user.facilities)
   users: User[];
 
-  @OneToMany(() => Location, (location) => location.facility)
+  @OneToMany(() => Location, (location) => location.facility, {
+    cascade: true
+  })
   locations: Location[];
 }

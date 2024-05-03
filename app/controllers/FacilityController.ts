@@ -23,12 +23,18 @@ export const getFacilityById = async (id: string) => {
 }
 
 export const addFacility = async (name: string, userIds: string[], locationIds: string[]) => {
+  // get users data by userIds
   const users = await getUserByIds(userIds);
+
+  // get locations data by locationIds
   const locations = await getLocationByIds(locationIds);
+
+  // create new facility
   const newFacility = new Facility();
   newFacility.name = name;
   newFacility.users = users;
   newFacility.locations = locations;
   await AppDataSource.manager.save(newFacility);
+
   return newFacility;
 }

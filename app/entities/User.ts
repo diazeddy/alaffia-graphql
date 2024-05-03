@@ -29,7 +29,10 @@ export class User {
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date;
 
-  @ManyToMany(() => Facility, (facility) => facility.users)
+  @ManyToMany(() => Facility, (facility) => facility.users, {
+    cascade: true
+  })
+
   @JoinTable()
   facilities: Facility[];
 }

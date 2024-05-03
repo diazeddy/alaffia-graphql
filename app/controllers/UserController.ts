@@ -1,7 +1,6 @@
 import AppDataSource from "../datasource";
 import { User } from "../entities/User";
 import { getFacilityByIds } from "./FacilityController";
-import { GraphQLError } from "graphql";
 
 export const getUserById = async (id: string) => {
   const user = await AppDataSource.createQueryBuilder()
@@ -31,7 +30,10 @@ export const addUser = async (
   role: string,
   facilityIds: string[]
 ) => {
+  // get facilities information by facilitiIds
   const facilities = await getFacilityByIds(facilityIds);
+
+  // create new user
   const newUser = new User();
   newUser.firstName = firstName;
   newUser.lastName = lastName;
@@ -39,5 +41,6 @@ export const addUser = async (
   newUser.role = role;
   newUser.facilities = facilities;
   await AppDataSource.manager.save(newUser);
+
   return await getUserById(newUser.id);
 }
