@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   OneToMany,
@@ -16,10 +17,10 @@ export class Facility {
   @Column()
   name: string;
 
-  @Column()
-  createdAt: string;
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+  createdAt: Date;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, (user) => user.facilities)
   users: User[];
 
   @OneToMany(() => Location, (location) => location.facility)

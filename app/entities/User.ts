@@ -27,9 +27,9 @@ export class User {
   role: string;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-  created_at: Date;
+  createdAt: Date;
 
-  @ManyToMany(() => Facility)
+  @ManyToMany(() => Facility, (facility) => facility.users)
   @JoinTable()
   facilities: Facility[];
 }
