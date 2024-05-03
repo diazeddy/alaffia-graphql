@@ -1,18 +1,18 @@
 import { gql } from "apollo-server-express";
 
 const Schema = gql`
-  type UserLocation {
+  type Location {
     id: String!,
     state: String!,
     zip: String!,
     address: String!
   }
 
-  type UserFacility {
+  type Facility {
     id: String!,
     name: String!,
     createdAt: String!,
-    locations: [UserLocation]
+    locations: [Location]
   }
 
   type User {
@@ -22,22 +22,7 @@ const Schema = gql`
     email: String!,
     role: String!,
     createdAt: String!,
-    facilities: [UserFacility]
-  }
-
-  type LocationFacility {
-    id: String!,
-    name: String!,
-    createdAt: String!
-  }
-
-  type LocationUser {
-    id: String!,
-    firstName: String!,
-    lastName: String!,
-    email: String!,
-    role: String!,
-    createdAt: String!
+    facilities: [Facility]
   }
 
   type Location {
@@ -45,13 +30,19 @@ const Schema = gql`
     state: String!,
     zip: String!,
     address: String!,
-    facility: LocationFacility,
-    users: [LocationUser]
+    facility: Facility,
+    users: [User]
   }
 
   type Query {
     user(id: String): User
     usersByLocation(id: String): Location
+  }
+
+  type Mutation {
+    addUser(firstName: String, lastName: String, email: String, role: String, facilities: [String]): User
+    addFacility(name: String, users: [String], locations: [String]): Facility
+    addLocation(state: String, zip: String, address: String, facility: String): Location
   }
 `
 
